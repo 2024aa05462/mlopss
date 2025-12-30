@@ -443,7 +443,7 @@ This project is licensed under the MIT License.
 
 ## 👥 Authors
 
-- **Koushik Jana** - MLOps Assignment
+- **Sk Shahrukh Saba** - MLOps Assignment
 
 ---
 
@@ -451,3 +451,4 @@ This project is licensed under the MIT License.
 
 - UCI Machine Learning Repository for the Heart Disease dataset
 - BITS Pilani for the MLOps course
+
