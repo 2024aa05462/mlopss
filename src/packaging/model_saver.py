@@ -73,7 +73,7 @@ class ModelPackager:
 
         # 5. Save model signature (input/output schema)
         if X_sample is not None:
-            signature = self._create_signature(model, X_sample, feature_names)
+            signature = self._create_signature(model, X_sample, feature_names, preprocessor)
             signature_path = self.output_dir / "model_signature.json"
             with open(signature_path, 'w') as f:
                 json.dump(signature, f, indent=2)
@@ -123,7 +123,7 @@ class ModelPackager:
             }
         }
 
-    def _create_signature(self, model, X_sample: np.ndarray, feature_names: list) -> Dict:
+    def _create_signature(self, model, X_sample: np.ndarray, feature_names: list, preprocessor=None) -> Dict:
         """Create input/output signature"""
         # Preprocess sample if needed, but model here might be the pipeline or just estimator
         # Assuming 'model' is just the estimator as passed in save_complete_package with separate preprocessor
@@ -140,13 +140,17 @@ class ModelPackager:
         # Ideally, we construct a temp pipeline
         
         try:
-             X_processed = preprocessor.transform(X_sample[:1])
-             y_pred = model.predict(X_processed)
-             y_proba = model.predict_proba(X_processed) if hasattr(model, 'predict_proba') else None
-        except:
-             # Fallback if model encompasses preprocessing or other issue
-             y_pred = model.predict(X_sample[:1])
-             y_proba = model.predict_proba(X_sample[:1]) if hasattr(model, 'predict_proba') else None
+            if preprocessor is not None:
+                X_processed = preprocessor.transform(X_sample[:1])
+                y_pred = model.predict(X_processed)
+                y_proba = model.predict_proba(X_processed) if hasattr(model, 'predict_proba') else None
+            else:
+                y_pred = model.predict(X_sample[:1])
+                y_proba = model.predict_proba(X_sample[:1]) if hasattr(model, 'predict_proba') else None
+        except Exception:
+            # Fallback if model encompasses preprocessing or other issue
+            y_pred = model.predict(X_sample[:1])
+            y_proba = model.predict_proba(X_sample[:1]) if hasattr(model, 'predict_proba') else None
 
         return {
             'inputs': {

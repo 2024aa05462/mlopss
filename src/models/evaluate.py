@@ -1,3 +1,4 @@
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import roc_curve, auc, confusion_matrix, precision_recall_curve
