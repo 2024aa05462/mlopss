@@ -39,7 +39,7 @@ prometheus-client>=0.17.0
 # prefect>=2.14.0
 
 # Data Loading
-# ucimlrepo>=0.0.3
+ucimlrepo>=0.0.3
 
 # Documentation
 # pdoc3>=0.10.0
