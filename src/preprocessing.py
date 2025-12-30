@@ -1,7 +1,15 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from prefect import task
 import yaml
+
+# Optional prefect import for workflow orchestration
+try:
+    from prefect import task
+except ImportError:
+    # If prefect is not installed, create a no-op decorator
+    def task(fn):
+        return fn
+
 
 @task
 def preprocess_data(df: pd.DataFrame, config_path: str = "config.yaml"):
