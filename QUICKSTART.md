@@ -36,7 +36,7 @@ This guide provides step-by-step instructions to clone and run the Heart Disease
 ### Monitoring Stack (Local Only)
 | Service | URL | Credentials | Start Command |
 |---------|-----|-------------|---------------|
-| 📈 **Grafana Dashboard** | http://localhost:3000 | admin / admin | See below |
+| 📈 **Grafana Dashboard** | http://localhost:3000/d/heart-disease-api/heart-disease-api-dashboard | admin / admin | See below |
 | 🔍 **Prometheus** | http://localhost:9090 | - | See below |
 
 ```bash
