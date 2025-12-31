@@ -3,7 +3,6 @@
 [![CI/CD Pipeline](https://github.com/shahrukhsaba/mlops/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/shahrukhsaba/mlops/actions)
 [![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/)
 [![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](https://www.docker.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **BITS Pilani - MLOps Assignment (S1-25_AIMLCZG523)**
 
@@ -1101,10 +1100,6 @@ Running `python scripts/execute_notebooks.py` generates all notebook screenshots
 - Code security analysis with Bandit
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License.
 
 ---
 
