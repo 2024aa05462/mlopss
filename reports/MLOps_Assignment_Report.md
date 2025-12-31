@@ -3,9 +3,10 @@
 
 **Course**: MLOps (S1-25_AIMLCZG523)  
 **Institution**: BITS Pilani  
-**Student Name**: [Your Name]  
+**Student Name**: Sk Shahrukh Saba  
 **Student ID**: [Your ID]  
-**Date**: December 2025
+**Date**: December 2025  
+**GitHub Repository**: https://github.com/shahrukhsaba/mlops
 
 ---
 
@@ -100,12 +101,15 @@ The script automatically:
 
 ### 2.5 Visualizations
 
-*[Insert screenshots from notebook 01_eda.ipynb]*
+Screenshots from `notebooks/01_eda.ipynb` (saved in `screenshots/` folder):
 
-- Histogram of numerical features
-- Correlation heatmap
-- Class distribution bar chart
-- Box plots for outlier detection
+| Screenshot | Description |
+|------------|-------------|
+| `01_numerical_histograms.png` | Distribution of numerical features |
+| `01_correlation_heatmap.png` | Feature correlation matrix |
+| `01_class_balance.png` | Target class distribution |
+| `01_boxplots_by_target.png` | Box plots for outlier detection |
+| `01_categorical_distributions.png` | Categorical feature distributions |
 
 ---
 
@@ -319,12 +323,21 @@ docker run -p 8000:8000 heart-disease-api:latest
 ### 7.4 Sample API Test
 
 ```bash
-curl -X POST "http://localhost:8000/predict?age=63&sex=1&cp=3&trestbps=145&chol=233&fbs=1&restecg=0&thalach=150&exang=0&oldpeak=2.3&slope=0&ca=0&thal=1"
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age":63,"sex":1,"cp":3,"trestbps":145,"chol":233,"fbs":1,"restecg":0,"thalach":150,"exang":0,"oldpeak":2.3,"slope":0,"ca":0,"thal":1}'
 ```
 
 **Response**:
 ```json
-{"prediction": 1, "confidence": 0.85}
+{
+  "prediction": 0,
+  "confidence": 0.2737,
+  "risk_level": "Low",
+  "probability_no_disease": 0.7263,
+  "probability_disease": 0.2737,
+  "processing_time_ms": 11.93
+}
 ```
 
 ### 7.5 Container Test Screenshot
@@ -503,15 +516,37 @@ heart-disease-mlops/
 
 ### B. GitHub Repository Link
 
-[https://github.com/YOUR_USERNAME/heart-disease-mlops](https://github.com/YOUR_USERNAME/heart-disease-mlops)
+**Repository**: https://github.com/shahrukhsaba/mlops
 
 ### C. Deployed API URL
 
-*(If deployed to public cloud)*
+**Local Testing Instructions**:
+```bash
+# Option 1: Docker
+docker build -t heart-disease-api:latest .
+docker run -d --name heart-disease-api -p 8000:8000 heart-disease-api:latest
+# Access: http://localhost:8000
+
+# Option 2: Kubernetes (Docker Desktop)
+kubectl apply -f k8s/deployment.yaml
+# Access: http://localhost:80
+```
 
 ### D. Video Demo Link
 
-*(Link to demonstration video)*
+*(To be added - Link to demonstration video)*
+
+### E. Screenshots Reference
+
+All screenshots are saved in the `screenshots/` folder:
+
+| Step | Screenshots |
+|------|-------------|
+| EDA | `01_*.png` (5 files) |
+| Model Training | `02_*.png` (4 files) |
+| MLflow Experiments | `03_*.png` (4 files) |
+| K8s Deployment | `07_*.txt` (4 files) |
+| Monitoring | `08_*.txt` (3 files) |
 
 ---
 
