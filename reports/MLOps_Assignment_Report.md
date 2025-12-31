@@ -190,17 +190,21 @@ All experiments are tracked using MLflow with the following logged:
 - **Metrics**: accuracy, precision, recall, f1, roc_auc
 - **Artifacts**: model.pkl, preprocessor.pkl, confusion_matrix.png
 
-### 4.2 MLflow UI Screenshot
-
-*[Insert screenshot of MLflow experiments page]*
-
-### 4.3 Experiment Comparison
+### 4.2 MLflow UI
 
 ```bash
-mlflow ui --port 5000
+mlflow ui --backend-store-uri ./mlruns --port 5000
+# Open: http://localhost:5000
 ```
 
-*[Insert screenshot showing experiment comparison]*
+### 4.3 MLflow Screenshots
+
+| Screenshot | Description |
+|------------|-------------|
+| `03_lr_confusion_matrix.png` | Logistic Regression confusion matrix |
+| `03_lr_roc_curve.png` | Logistic Regression ROC curve |
+| `03_rf_confusion_matrix.png` | Random Forest confusion matrix |
+| `03_rf_roc_curve.png` | Random Forest ROC curve |
 
 ---
 
@@ -283,7 +287,16 @@ pytest tests/ --cov=src --cov=api --cov-report=html
 
 ### 6.4 Pipeline Screenshots
 
-*[Insert GitHub Actions workflow run screenshot]*
+View CI/CD results: https://github.com/shahrukhsaba/mlops/actions
+
+| Job | Description | Status |
+|-----|-------------|--------|
+| lint | flake8, black, isort | ✅ |
+| test | pytest with coverage | ✅ |
+| train | Model training | ✅ |
+| docker | Build & test image | ✅ |
+| integration | API tests | ✅ |
+| security | Bandit, safety | ✅ |
 
 ---
 
@@ -342,7 +355,7 @@ curl -X POST http://localhost:8000/predict \
 
 ### 7.5 Container Test Screenshot
 
-*[Insert screenshot of Docker container running and curl test]*
+See `screenshots/07_docker_container_status.txt` for Docker container verification.
 
 ---
 
@@ -411,11 +424,14 @@ heart-disease-api  LoadBalancer   10.x.x.x       <pending>     80:xxxxx/TCP
 
 ### 8.4 Deployment Screenshots
 
-*[Insert screenshots of:]*
-- kubectl get pods
-- kubectl get svc
-- minikube service URL
-- API response from deployed service
+See `screenshots/` folder:
+
+| Screenshot | Description |
+|------------|-------------|
+| `07_k8s_deployment_status.txt` | kubectl get deployments, pods, services, HPA |
+| `07_k8s_api_verification.txt` | API endpoint tests via LoadBalancer |
+| `07_k8s_pod_details.txt` | kubectl describe deployment, pod logs |
+| `07_docker_container_status.txt` | Docker container and image status |
 
 ---
 
@@ -445,9 +461,17 @@ Structured logs in `logs/api.log`:
 2025-12-28 10:30:46 INFO Prediction: 0, Confidence: 0.92, Time: 0.038s
 ```
 
-### 9.3 Monitoring Dashboard
+### 9.3 Monitoring Dashboard & Screenshots
 
-*[Insert Grafana dashboard screenshot if available]*
+See `screenshots/` folder:
+
+| Screenshot | Description |
+|------------|-------------|
+| `08_api_metrics.txt` | Prometheus metrics output |
+| `08_api_logs.txt` | API request logs |
+| `08_monitoring_stack.txt` | Monitoring stack configuration |
+
+**Grafana Dashboard**: `monitoring/grafana/dashboards/heart-disease-api.json`
 
 ---
 

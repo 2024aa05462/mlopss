@@ -9,6 +9,25 @@
 
 A production-ready MLOps pipeline for predicting heart disease risk using the UCI Heart Disease dataset. This project demonstrates end-to-end ML model development, CI/CD, containerization, and cloud deployment.
 
+📄 **[View Full Assignment Report](reports/MLOps_Assignment_Report.md)** | 🔗 **[GitHub Repository](https://github.com/shahrukhsaba/mlops)**
+
+---
+
+## 📊 Assignment Tasks Completion Summary
+
+| # | Task | Marks | Status | Section |
+|---|------|-------|--------|---------|
+| 1 | Data Acquisition & EDA | 5 | ✅ Complete | [Step 1](#step-1-data-acquisition--eda-5-marks) |
+| 2 | Feature Engineering & Model Development | 8 | ✅ Complete | [Step 2](#step-2-feature-engineering--model-development-8-marks) |
+| 3 | Experiment Tracking | 5 | ✅ Complete | [Step 3](#step-3-experiment-tracking-5-marks) |
+| 4 | Model Packaging & Reproducibility | 7 | ✅ Complete | [Step 4](#step-4-model-packaging--reproducibility-7-marks) |
+| 5 | CI/CD Pipeline & Automated Testing | 8 | ✅ Complete | [Step 5](#step-5-cicd-pipeline--automated-testing-8-marks) |
+| 6 | Model Containerization | 5 | ✅ Complete | [Step 6](#step-6-model-containerization-5-marks) |
+| 7 | Production Deployment | 7 | ✅ Complete | [Step 7](#step-7-production-deployment-7-marks) |
+| 8 | Monitoring & Logging | 3 | ✅ Complete | [Step 8](#step-8-monitoring--logging-3-marks) |
+| 9 | Documentation & Reporting | 2 | ✅ Complete | [Step 9](#step-9-documentation--reporting-2-marks) |
+| | **Total** | **50** | ✅ | |
+
 ---
 
 ## 🚀 Quick Start - Run the Complete Project
@@ -52,52 +71,66 @@ open http://localhost:8000/docs
 
 ## 📋 Table of Contents
 
+### Quick Start & Overview
 - [Quick Start](#-quick-start---run-the-complete-project)
-- [Overview](#-overview)
-- [Features](#-features)
 - [Project Structure](#-project-structure)
-- [Detailed Execution Steps](#-detailed-execution-steps)
-- [Data Acquisition](#-data-acquisition)
-- [Model Packaging & Reproducibility](#-model-packaging--reproducibility)
-- [Model Training](#-model-training)
-- [API Usage](#-api-usage)
-- [Model Containerization (Step 6)](#-model-containerization-step-6)
-- [Production Deployment (Step 7)](#-production-deployment-step-7)
-- [CI/CD Pipeline](#-cicd-pipeline)
-- [Monitoring & Logging (Step 8)](#-monitoring--logging-step-8)
-- [Testing](#-testing)
-- [MLflow Experiment Tracking](#-mlflow-experiment-tracking)
+- [Deliverables Checklist](#-deliverables-checklist)
+
+### Assignment Steps (50 Marks Total)
+- [Step 1: Data Acquisition & EDA (5 marks)](#step-1-data-acquisition--eda-5-marks)
+- [Step 2: Feature Engineering & Model Development (8 marks)](#step-2-feature-engineering--model-development-8-marks)
+- [Step 3: Experiment Tracking (5 marks)](#step-3-experiment-tracking-5-marks)
+- [Step 4: Model Packaging & Reproducibility (7 marks)](#step-4-model-packaging--reproducibility-7-marks)
+- [Step 5: CI/CD Pipeline & Automated Testing (8 marks)](#step-5-cicd-pipeline--automated-testing-8-marks)
+- [Step 6: Model Containerization (5 marks)](#step-6-model-containerization-5-marks)
+- [Step 7: Production Deployment (7 marks)](#step-7-production-deployment-7-marks)
+- [Step 8: Monitoring & Logging (3 marks)](#step-8-monitoring--logging-3-marks)
+- [Step 9: Documentation & Reporting (2 marks)](#step-9-documentation--reporting-2-marks)
+
+### Additional Resources
+- [Generated Screenshots](#-generated-screenshots)
+- [Model Performance](#-model-performance)
+- [Full Assignment Report](reports/MLOps_Assignment_Report.md)
+
+---
+
+## 📦 Deliverables Checklist
+
+### a) GitHub Repository Contents
+
+| Item | Status | Location |
+|------|--------|----------|
+| Code (src, api, scripts) | ✅ | `src/`, `api/`, `scripts/` |
+| Dockerfile(s) | ✅ | `Dockerfile`, `docker-compose.yml` |
+| requirements.txt | ✅ | `requirements.txt` |
+| Cleaned dataset & download script | ✅ | `data/`, `scripts/download_data.py` |
+| Jupyter notebooks (EDA, training) | ✅ | `notebooks/` (6 notebooks) |
+| test/ folder with unit tests | ✅ | `tests/unit/`, `tests/integration/` |
+| GitHub Actions workflow YAML | ✅ | `.github/workflows/ci-cd.yml` |
+| Deployment manifests | ✅ | `k8s/` (4 YAML files) |
+| Screenshot folder | ✅ | `screenshots/` (20 files) |
+| Final written report | ✅ | `reports/MLOps_Assignment_Report.md` |
+
+### b) Short Video
+| Item | Status | Notes |
+|------|--------|-------|
+| End-to-end demo video | ⏳ Pending | User to record |
+
+### c) Deployed API URL
+| Deployment | URL | Status |
+|------------|-----|--------|
+| Docker (local) | http://localhost:8000 | ✅ Working |
+| Kubernetes (local) | http://localhost:80 | ✅ Working |
 
 ---
 
 ## 🎯 Overview
 
-This project builds a machine learning classifier to predict heart disease risk based on patient health data. It includes:
+This project builds a machine learning classifier to predict heart disease risk based on patient health data per the [BITS Pilani MLOps Assignment (S1-25_AIMLCZG523)](reports/MLOps_Assignment_Report.md).
 
-- **Data Pipeline**: Automated data ingestion, validation, and preprocessing
-- **Model Training**: Logistic Regression and Random Forest with hyperparameter tuning
-- **Experiment Tracking**: MLflow integration for logging parameters, metrics, and artifacts
-- **API Serving**: FastAPI-based prediction service
-- **Containerization**: Docker image for portable deployment
-- **Orchestration**: Kubernetes manifests for production deployment
-- **CI/CD**: GitHub Actions workflow for automated testing and deployment
-- **Monitoring**: Prometheus metrics and logging
+**Dataset**: UCI Heart Disease Dataset (303 patients, 14 features, binary target)
 
----
-
-## ✨ Features
-
-| Feature | Description |
-|---------|-------------|
-| 📊 EDA | Comprehensive exploratory data analysis with visualizations |
-| 🔧 Feature Engineering | Automated feature creation and preprocessing pipeline |
-| 🤖 Multiple Models | Logistic Regression & Random Forest with GridSearchCV |
-| 📈 Experiment Tracking | MLflow logging of parameters, metrics, and artifacts |
-| 🧪 Testing | Unit and integration tests with pytest |
-| 🐳 Docker | Containerized API for portable deployment |
-| ☸️ Kubernetes | Deployment manifests with HPA and health checks |
-| 🔄 CI/CD | GitHub Actions for automated pipeline |
-| 📡 Monitoring | Prometheus metrics and structured logging |
+**Problem**: Build a classifier to predict heart disease risk and deploy as a cloud-ready, monitored API.
 
 ---
 
@@ -278,9 +311,13 @@ docker rm heart-disease-api
 
 ---
 
-## 📥 Data Acquisition
+---
 
-### Download Dataset
+## Step 1: Data Acquisition & EDA (5 marks)
+
+> **Assignment Requirement**: Obtain the dataset (provide download script or instructions). Clean and preprocess the data (handle missing values, encode features). Perform EDA with professional visualizations.
+
+### 1.1 Download Dataset
 
 The UCI Heart Disease dataset can be downloaded automatically:
 
@@ -294,7 +331,7 @@ This script will:
 - Save to `data/processed/heart_disease_clean.csv`
 - Generate metadata in `data/processed/metadata.json`
 
-### Dataset Description
+### 1.2 Dataset Description
 
 | Feature | Description | Type |
 |---------|-------------|------|
@@ -313,11 +350,103 @@ This script will:
 | thal | Thalassemia type | Categorical |
 | target | Heart disease presence (0/1) | Binary |
 
+### 1.3 EDA Visualizations (Screenshots)
+
+| Screenshot | Description |
+|------------|-------------|
+| `01_numerical_histograms.png` | Distribution of numerical features |
+| `01_correlation_heatmap.png` | Feature correlation matrix |
+| `01_class_balance.png` | Target class distribution (46% positive, 54% negative) |
+| `01_boxplots_by_target.png` | Box plots for outlier detection |
+| `01_categorical_distributions.png` | Categorical feature distributions |
+
+**Notebook**: `notebooks/01_eda.ipynb`
+
 ---
 
-## 📦 Model Packaging & Reproducibility
+## Step 2: Feature Engineering & Model Development (8 marks)
 
-### Saved Model Artifacts
+> **Assignment Requirement**: Prepare the final ML features (scaling and encoding). Build and train at least two classification models. Document model selection and tuning process. Evaluate using cross-validation and relevant metrics.
+
+### 2.1 Feature Engineering
+
+**Engineered Features**:
+- Age Groups (binned into decades)
+- Cholesterol Categories (Normal/Borderline/High)
+- Blood Pressure Categories (Normal/Elevated/High)
+- Heart Rate Reserve (220 - age - max_heart_rate)
+- Interaction Features (age × thalach, chol × trestbps)
+
+### 2.2 Models Trained
+
+| Model | Hyperparameter Grid |
+|-------|---------------------|
+| **Logistic Regression** | C: [0.01, 0.1, 1, 10], solver: [lbfgs, liblinear] |
+| **Random Forest** | n_estimators: [100, 200], max_depth: [10, 20, None] |
+
+### 2.3 Cross-Validation Results
+
+| Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
+|-------|----------|-----------|--------|----------|---------|
+| Logistic Regression | 80.00% | 83.33% | 71.43% | 76.92% | 92.86% |
+| **Random Forest** | **81.67%** | 81.48% | **78.57%** | **80.00%** | 91.52% |
+
+**Selected Model**: Random Forest (best overall performance)
+
+### 2.4 Model Training Screenshots
+
+| Screenshot | Description |
+|------------|-------------|
+| `02_model_comparison.png` | Model metrics comparison |
+| `02_roc_curve_comparison.png` | ROC curves for both models |
+| `02_confusion_matrices.png` | Confusion matrices side-by-side |
+| `02_feature_importance.png` | Random Forest feature importance |
+
+**Notebook**: `notebooks/02_feature_engineering_modeling.ipynb`
+
+---
+
+## Step 3: Experiment Tracking (5 marks)
+
+> **Assignment Requirement**: Integrate MLflow (or similar tool) for experiment tracking. Log parameters, metrics, artifacts, and plots for all runs.
+
+### 3.1 MLflow Integration
+
+All experiments are tracked with MLflow:
+
+```bash
+# Start MLflow UI
+mlflow ui --backend-store-uri ./mlruns --port 5000
+# Open: http://localhost:5000
+```
+
+### 3.2 Logged Items
+
+| Item Type | Examples |
+|-----------|----------|
+| **Parameters** | C, n_estimators, max_depth, solver |
+| **Metrics** | accuracy, precision, recall, f1, roc_auc |
+| **Artifacts** | model.pkl, preprocessor.pkl, confusion_matrix.png, roc_curve.png |
+
+### 3.3 Experiment Screenshots
+
+| Screenshot | Description |
+|------------|-------------|
+| `03_lr_confusion_matrix.png` | Logistic Regression confusion matrix |
+| `03_lr_roc_curve.png` | Logistic Regression ROC curve |
+| `03_rf_confusion_matrix.png` | Random Forest confusion matrix |
+| `03_rf_roc_curve.png` | Random Forest ROC curve |
+
+**Notebook**: `notebooks/03_mlflow_experiments.ipynb`  
+**MLflow Runs**: `mlruns/` directory (tracked in Git)
+
+---
+
+## Step 4: Model Packaging & Reproducibility (7 marks)
+
+> **Assignment Requirement**: Save the final model in a reusable format. Write a clean requirements.txt. Provide a preprocessing pipeline/transformers to ensure full reproducibility.
+
+### 4.1 Saved Model Artifacts
 
 The following files are included in the repository for full reproducibility:
 
@@ -332,7 +461,7 @@ The following files are included in the repository for full reproducibility:
 | `requirements.txt` | All Python dependencies with pinned versions |
 | `src/features/feature_engineering.py` | Feature creation and preprocessing pipeline |
 
-### Preprocessing Pipeline
+### 4.2 Preprocessing Pipeline
 
 The preprocessing pipeline (`src/features/feature_engineering.py`) includes:
 
@@ -346,14 +475,14 @@ build_preprocessing_pipeline(numerical_features, categorical_features)
 # - Categorical: SimpleImputer(most_frequent) + OneHotEncoder
 ```
 
-### Reproducibility
+### 4.3 Reproducibility
 
 - **Random Seed**: 42 (fixed for all training)
 - **Python Version**: 3.10+
 - **scikit-learn Version**: 1.3.0
 - **All dependencies pinned** in `requirements.txt`
 
-### Load Model for Inference
+### 4.4 Load Model for Inference
 
 ```python
 import joblib
@@ -368,111 +497,63 @@ prediction = model.predict(preprocessed_data)
 
 ---
 
-## 🎓 Model Training
+## Step 5: CI/CD Pipeline & Automated Testing (8 marks)
 
-### Train Models
+> **Assignment Requirement**: Write unit tests for data processing and model code. Create a GitHub Actions pipeline that includes linting, unit testing, and model training steps. Artifacts/logging for each workflow run.
 
-Train both Logistic Regression and Random Forest models:
+### 5.1 Unit Tests
 
-```bash
-python src/models/train_models.py
-```
+| Test File | Tests | Description |
+|-----------|-------|-------------|
+| `tests/unit/test_data_processing.py` | 15 | Data loading, validation, transformations |
+| `tests/unit/test_model.py` | 12 | Predictions, metrics, risk classification |
+| `tests/unit/test_preprocessing.py` | 11 | Feature engineering, preprocessing |
+| `tests/integration/test_api_integration.py` | 8 | Full API integration tests |
 
-This will:
-1. Load and preprocess the data
-2. Train Logistic Regression with hyperparameter tuning
-3. Train Random Forest with hyperparameter tuning
-4. Log experiments to MLflow
-5. Save the best model to `models/production/`
-
-### View MLflow Experiments
+**Total: 52+ tests**
 
 ```bash
-mlflow ui --port 5000
+# Run all tests
+pytest tests/ -v
+
+# Run with coverage
+pytest tests/ --cov=src --cov=api --cov-report=html
 ```
 
-Open http://localhost:5000 to view experiment tracking.
+### 5.2 GitHub Actions Pipeline
+
+**Workflow**: `.github/workflows/ci-cd.yml`
+
+| Job | Description | Artifacts |
+|-----|-------------|-----------|
+| **lint** | flake8, black, isort | - |
+| **test** | pytest with coverage | Coverage reports (XML, HTML) |
+| **train** | Model training & validation | Model artifacts |
+| **docker** | Build & test Docker image | Docker image (.tar.gz) |
+| **integration** | API integration tests | Test results |
+| **security** | bandit, safety scans | Security reports |
+| **docs** | Generate documentation | API docs |
+
+### 5.3 Pre-commit Hook
+
+```bash
+# Install pre-commit hook
+cp scripts/pre-commit-hook.sh .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+
+# Or use pre-commit framework
+pip install pre-commit && pre-commit install
+```
+
+**View CI/CD Results**: [GitHub Actions](https://github.com/shahrukhsaba/mlops/actions)
 
 ---
 
-## 🌐 API Usage
+## Step 6: Model Containerization (5 marks)
 
-### Run API Locally
+> **Assignment Requirement**: Build a Docker container for the model-serving API (Flask or FastAPI recommended). Expose /predict endpoint, accept JSON input, return prediction and confidence. Container must be built and run locally with sample input.
 
-```bash
-uvicorn api.app:app --reload --host 0.0.0.0 --port 8000
-```
-
-### API Endpoints
-
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/` | GET | API information |
-| `/health` | GET | Health check with model status |
-| `/model-info` | GET | Model metadata and metrics |
-| `/predict` | POST | Make prediction (JSON input) |
-| `/metrics` | GET | Prometheus metrics |
-| `/docs` | GET | Swagger UI documentation |
-| `/redoc` | GET | ReDoc documentation |
-
-### Example Request (JSON Input)
-
-```bash
-curl -X POST http://localhost:8000/predict \
-  -H "Content-Type: application/json" \
-  -d '{
-    "age": 63,
-    "sex": 1,
-    "cp": 3,
-    "trestbps": 145,
-    "chol": 233,
-    "fbs": 1,
-    "restecg": 0,
-    "thalach": 150,
-    "exang": 0,
-    "oldpeak": 2.3,
-    "slope": 0,
-    "ca": 0,
-    "thal": 1
-  }'
-```
-
-### Example Response
-
-```json
-{
-  "prediction": 0,
-  "confidence": 0.2737,
-  "risk_level": "Low",
-  "probability_no_disease": 0.7263,
-  "probability_disease": 0.2737,
-  "processing_time_ms": 11.93
-}
-```
-
-### Response Fields
-
-| Field | Description |
-|-------|-------------|
-| `prediction` | 0 = No heart disease, 1 = Heart disease present |
-| `confidence` | Probability of disease (0-1) |
-| `risk_level` | "Low" (<0.3), "Medium" (0.3-0.7), "High" (>0.7) |
-| `probability_no_disease` | Probability of no heart disease |
-| `probability_disease` | Probability of heart disease |
-| `processing_time_ms` | API response time in milliseconds |
-
-### Interactive Documentation
-
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
----
-
-## 🐳 Model Containerization (Step 6)
-
-This section covers Step 6 of the assignment: *"Build a Docker container for the model-serving API (Flask or FastAPI is recommended)"*.
-
-### Why FastAPI?
+### 6.1 Why FastAPI?
 
 | Feature | FastAPI | Flask |
 |---------|---------|-------|
@@ -483,14 +564,17 @@ This section covers Step 6 of the assignment: *"Build a Docker container for the
 | **Performance** | ✅ Faster (async) | ⚠️ Slower |
 | **Type Hints** | ✅ Required & validated | ❌ Optional |
 
-### API Features
+### 6.2 API Features
 
-- **Framework**: FastAPI with Pydantic validation
-- **Endpoint**: `POST /predict` accepts **JSON input**
-- **Response**: Returns prediction, confidence, and risk level
-- **Documentation**: Auto-generated Swagger UI at `/docs`
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/health` | GET | Health check with model status |
+| `/predict` | POST | Make prediction (**JSON input**) |
+| `/model-info` | GET | Model metadata and metrics |
+| `/metrics` | GET | Prometheus metrics |
+| `/docs` | GET | Swagger UI documentation |
 
-### Dockerfile Overview
+### 6.3 Dockerfile
 
 ```dockerfile
 FROM python:3.10-slim
@@ -503,27 +587,20 @@ EXPOSE 8000
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-### Build Docker Image
+### 6.4 Build & Run Container
 
 ```bash
+# Build Docker image
 docker build -t heart-disease-api:latest .
-```
 
-### Run Container
-
-```bash
+# Run container
 docker run -d --name heart-disease-api -p 8000:8000 heart-disease-api:latest
-```
 
-### Using Docker Compose
-
-```bash
+# Or use Docker Compose (includes MLflow)
 docker-compose up -d
 ```
 
-This starts both the API and MLflow server.
-
-### Test Container with JSON Input
+### 6.5 Test Container with JSON Input
 
 ```bash
 # Health check
@@ -573,11 +650,11 @@ docker rm heart-disease-api
 
 ---
 
-## ☸️ Production Deployment (Step 7)
+## Step 7: Production Deployment (7 marks)
 
-This section covers Step 7 of the assignment: *"Deploy the Dockerized API to a public cloud or local Kubernetes"*.
+> **Assignment Requirement**: Deploy the Dockerized API to a public cloud or local Kubernetes (GKE, EKS, AKS, or Minikube/Docker Desktop). Use a deployment manifest or Helm chart. Expose via Load Balancer or Ingress. Verify endpoints and provide deployment screenshots.
 
-### Deployment Options
+### 7.1 Deployment Options
 
 | Option | Description | Used in This Project |
 |--------|-------------|----------------------|
@@ -585,9 +662,9 @@ This section covers Step 7 of the assignment: *"Deploy the Dockerized API to a p
 | **Minikube** | Local K8s for development | ✅ Supported |
 | **GKE/EKS/AKS** | Cloud Kubernetes | ✅ Manifests ready |
 
-### Kubernetes Manifests (in `k8s/` folder)
+### 7.2 Kubernetes Manifests (Deployment Manifests)
 
-The project uses **deployment manifests** (standard Kubernetes YAML) instead of Helm charts:
+The project uses **deployment manifests** (standard Kubernetes YAML):
 
 ```
 k8s/
@@ -604,15 +681,15 @@ k8s/
 | `k8s/ingress.yaml` | Ingress | Optional domain-based routing rules |
 | `k8s/namespace.yaml` | Namespace | Isolated namespace for the application |
 
-### Resources in `deployment.yaml`
+### 7.3 Resources in `deployment.yaml`
 
 | Resource | API Version | Purpose |
 |----------|-------------|---------|
 | **Deployment** | apps/v1 | Manages 2 replicas with rolling updates |
-| **Service** | v1 (LoadBalancer) | Exposes API on port 80 → container 8000 |
+| **Service** | v1 (**LoadBalancer**) | Exposes API on port 80 → container 8000 |
 | **HorizontalPodAutoscaler** | autoscaling/v2 | Auto-scales pods based on CPU/memory |
 
-### Deployment Features
+### 7.4 Deployment Features
 
 | Feature | Configuration |
 |---------|---------------|
@@ -625,7 +702,7 @@ k8s/
 | **Prometheus** | Metrics scraping annotations |
 | **Environment** | `ENV=production`, `LOG_LEVEL=INFO` |
 
-### Deploy to Docker Desktop Kubernetes
+### 7.5 Deploy to Docker Desktop Kubernetes
 
 ```bash
 # Ensure Docker Desktop Kubernetes is enabled
@@ -644,7 +721,7 @@ kubectl get svc
 kubectl get hpa
 ```
 
-### Deploy to Minikube
+### 7.6 Deploy to Minikube (Alternative)
 
 ```bash
 # Start Minikube
@@ -666,7 +743,7 @@ kubectl apply -f k8s/ingress.yaml
 minikube service heart-disease-api --url
 ```
 
-### Verify Deployment
+### 7.7 Verify Deployment
 
 ```bash
 # Check deployment status
@@ -691,7 +768,7 @@ kubectl get hpa
 # heart-disease-api-hpa   Deployment/heart-disease-api   2         5         2
 ```
 
-### Test Endpoints via LoadBalancer (Port 80)
+### 7.8 Test Endpoints via LoadBalancer (Port 80)
 
 ```bash
 # Health check
@@ -709,26 +786,7 @@ curl -X POST http://localhost:80/predict \
 # {"prediction": 0, "confidence": 0.2737, "risk_level": "Low", ...}
 ```
 
-### View Pod Logs
-
-```bash
-kubectl logs -l app=heart-disease-api --tail=20
-```
-
-### Scale Deployment Manually
-
-```bash
-kubectl scale deployment heart-disease-api --replicas=3
-```
-
-### Restart Deployment (Update Image)
-
-```bash
-kubectl rollout restart deployment heart-disease-api
-kubectl rollout status deployment heart-disease-api
-```
-
-### Deployment Screenshots
+### 7.9 Deployment Screenshots
 
 See the `screenshots/` folder for deployment verification:
 
@@ -741,36 +799,11 @@ See the `screenshots/` folder for deployment verification:
 
 ---
 
-## 🔄 CI/CD Pipeline
+## Step 8: Monitoring & Logging (3 marks)
 
-The GitHub Actions workflow (`.github/workflows/ci-cd.yml`) includes:
+> **Assignment Requirement**: Integrate logging of API requests. Demonstrate simple monitoring (Prometheus + Grafana or API metrics/logs dashboard).
 
-| Job | Description | Artifacts |
-|-----|-------------|-----------|
-| **lint** | flake8, black, isort code quality | - |
-| **test** | pytest with coverage | Coverage reports (XML, HTML) |
-| **train** | Model training & validation | Model artifacts, MLflow runs |
-| **docker** | Build & test Docker image | Docker image (.tar.gz) |
-| **integration** | API integration tests | Test results |
-| **security** | bandit, safety scans | Security reports |
-
-### Trigger Pipeline
-
-- Push to `main`, `master`, or `develop` branch
-- Pull request to `main` or `master`
-- Manual trigger via `workflow_dispatch`
-
-### View Results
-
-Check the [Actions tab](https://github.com/shahrukhsaba/mlops/actions) in the GitHub repository.
-
----
-
-## 📊 Monitoring & Logging (Step 8)
-
-This section covers Step 8 of the assignment: *"Integrate logging of API requests. Demonstrate simple monitoring (Prometheus + Grafana or API metrics/logs dashboard)"*.
-
-### 1. API Request Logging
+### 8.1 API Request Logging
 
 All API requests are logged with structured logging:
 
@@ -786,7 +819,7 @@ All API requests are logged with structured logging:
 - Structured format: timestamp, level, message
 - Request details: prediction, confidence, risk level, duration
 
-### 2. Prometheus Metrics
+### 8.2 Prometheus Metrics
 
 The API exposes comprehensive metrics at `/metrics`:
 
@@ -807,7 +840,7 @@ curl http://localhost:8000/metrics
 | `prediction_latency_avg_ms` | gauge | Average latency (ms) |
 | `prediction_latency_total_ms` | counter | Total latency (ms) |
 
-### 3. Monitoring Stack (Prometheus + Grafana)
+### 8.3 Monitoring Stack (Prometheus + Grafana)
 
 ```
 monitoring/
@@ -822,7 +855,7 @@ monitoring/
         └── prometheus.yml          # Prometheus datasource
 ```
 
-### Start Monitoring Stack
+### 8.4 Start Monitoring Stack
 
 ```bash
 # Build API image first (if not already built)
@@ -833,7 +866,7 @@ cd monitoring
 docker-compose -f docker-compose-monitoring.yml up -d
 ```
 
-### Access Dashboards
+### 8.5 Access Dashboards
 
 | Service | URL | Credentials |
 |---------|-----|-------------|
@@ -841,7 +874,7 @@ docker-compose -f docker-compose-monitoring.yml up -d
 | **Prometheus** | http://localhost:9090 | - |
 | **Grafana** | http://localhost:3000 | admin / admin |
 
-### Grafana Dashboard Features
+### 8.6 Grafana Dashboard Features
 
 The pre-built dashboard (`heart-disease-api.json`) includes:
 
@@ -852,7 +885,7 @@ The pre-built dashboard (`heart-disease-api.json`) includes:
 - **Predictions by Class** - Pie chart (Disease vs No Disease)
 - **Prediction Counts Over Time** - Time series graph
 
-### Grafana Login & Dashboard Access
+### 8.7 Grafana Login & Dashboard Access
 
 1. **Open Grafana**: http://localhost:3000
 2. **Login**: Username `admin`, Password `admin`
@@ -867,7 +900,7 @@ The pre-built dashboard (`heart-disease-api.json`) includes:
 # 3. Click Import
 ```
 
-### Verify Prometheus is Scraping
+### 8.8 Verify Prometheus is Scraping
 
 ```bash
 # Check targets
@@ -877,17 +910,7 @@ curl http://localhost:9090/api/v1/targets
 curl "http://localhost:9090/api/v1/query?query=predictions_total"
 ```
 
-### View Container Logs
-
-```bash
-# Docker container logs
-docker logs heart-disease-api --tail=50
-
-# Kubernetes pod logs
-kubectl logs -l app=heart-disease-api --tail=50
-```
-
-### Monitoring Screenshots
+### 8.9 Monitoring Screenshots
 
 See the `screenshots/` folder:
 
@@ -899,73 +922,103 @@ See the `screenshots/` folder:
 
 ---
 
-## 🧪 Testing
+## Step 9: Documentation & Reporting (2 marks)
 
-### Test Coverage
+> **Assignment Requirement**: Submit a professional Markdown or PDF report including: Setup/install instructions, EDA and modelling choices, Experiment tracking summary, Architecture diagram, CI/CD and deployment workflow screenshots, Link to code repository.
 
-| Test File | Tests | Description |
-|-----------|-------|-------------|
-| `tests/unit/test_data_processing.py` | 15 | Data loading, validation, transformations |
-| `tests/unit/test_model.py` | 12 | Predictions, metrics, risk classification |
-| `tests/unit/test_preprocessing.py` | 11 | Feature engineering, preprocessing |
-| `tests/unit/test_api.py` | - | API endpoint tests |
-| `tests/integration/test_api_integration.py` | - | Full API integration |
+### 9.1 Full Assignment Report
 
-**Total: 52+ tests**
+📄 **[View Full Assignment Report](reports/MLOps_Assignment_Report.md)**
 
-### Run All Tests
+The report includes:
+- Setup/install instructions
+- EDA and modelling choices  
+- Experiment tracking summary
+- Architecture diagram
+- CI/CD and deployment workflow screenshots
+- Link to code repository
 
-```bash
-pytest tests/ -v
+### 9.2 Report Contents
+
+| Section | Description |
+|---------|-------------|
+| 1. Executive Summary | Project overview and key results |
+| 2. Data Acquisition & EDA | Dataset, preprocessing, visualizations |
+| 3. Feature Engineering & Model Development | Features, models, tuning, metrics |
+| 4. Experiment Tracking | MLflow integration and logged items |
+| 5. Model Packaging & Reproducibility | Artifacts, requirements, reproducibility |
+| 6. CI/CD Pipeline & Automated Testing | Tests, GitHub Actions workflow |
+| 7. Model Containerization | Docker, FastAPI, endpoints |
+| 8. Production Deployment | Kubernetes architecture, deployment |
+| 9. Monitoring & Logging | Prometheus, Grafana, logging |
+| 10. Conclusion & Future Work | Summary and improvements |
+| 11. References | External resources |
+| 12. Appendix | Repository structure, links, screenshots |
+
+### 9.3 Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        MLOps Pipeline Architecture                    │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│   ┌─────────────┐    ┌─────────────┐    ┌─────────────┐             │
+│   │  UCI Data   │───►│  Download   │───►│   Clean &   │             │
+│   │  Repository │    │   Script    │    │  Preprocess │             │
+│   └─────────────┘    └─────────────┘    └──────┬──────┘             │
+│                                                 │                     │
+│                      ┌──────────────────────────▼──────────────────┐ │
+│                      │              MLflow Tracking                 │ │
+│                      │  ┌─────────────────┬─────────────────┐      │ │
+│                      │  │ Logistic Reg.   │  Random Forest  │      │ │
+│                      │  │ Training        │  Training       │      │ │
+│                      │  └─────────────────┴─────────────────┘      │ │
+│                      └──────────────────────────┬──────────────────┘ │
+│                                                 │                     │
+│   ┌─────────────┐    ┌─────────────┐    ┌──────▼──────┐             │
+│   │   GitHub    │───►│   CI/CD     │───►│   Docker    │             │
+│   │   Actions   │    │   Pipeline  │    │   Image     │             │
+│   └─────────────┘    └─────────────┘    └──────┬──────┘             │
+│                                                 │                     │
+│   ┌─────────────────────────────────────────────▼──────────────────┐ │
+│   │                    Kubernetes Cluster                           │ │
+│   │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐            │ │
+│   │  │  Pod 1      │  │  Pod 2      │  │  Pod N      │            │ │
+│   │  │  FastAPI    │  │  FastAPI    │  │  FastAPI    │            │ │
+│   │  └─────────────┘  └─────────────┘  └─────────────┘            │ │
+│   │           │              │              │                       │ │
+│   │           └──────────────┼──────────────┘                       │ │
+│   │                          │                                       │ │
+│   │  ┌───────────────────────▼───────────────────────┐             │ │
+│   │  │           LoadBalancer Service                │             │ │
+│   │  │           (localhost:80)                      │             │ │
+│   │  └───────────────────────┬───────────────────────┘             │ │
+│   └──────────────────────────┼──────────────────────────────────────┘ │
+│                              │                                       │
+│   ┌──────────────────────────▼──────────────────────┐               │
+│   │                  Monitoring Stack                │               │
+│   │  ┌─────────────┐  ┌─────────────────────────┐  │               │
+│   │  │ Prometheus  │  │       Grafana           │  │               │
+│   │  │  :9090      │──│       :3000             │  │               │
+│   │  └─────────────┘  └─────────────────────────┘  │               │
+│   └─────────────────────────────────────────────────┘               │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
-### Run Unit Tests
+### 9.4 Repository Links
 
-```bash
-pytest tests/unit/ -v
-```
-
-### Run Integration Tests
-
-```bash
-# Start the API first
-uvicorn api.app:app --port 8000 &
-
-# Run integration tests
-pytest tests/integration/ -v
-```
-
-### Test Coverage
-
-```bash
-pytest tests/ --cov=src --cov=api --cov-report=html
-```
-
----
-
-## 📈 MLflow Experiment Tracking
-
-### Features Tracked
-
-- **Parameters**: Hyperparameters, model configuration
-- **Metrics**: Accuracy, Precision, Recall, F1, ROC-AUC
-- **Artifacts**: Model files, preprocessor, plots
-
-### Start MLflow UI
-
-```bash
-mlflow ui --backend-store-uri ./mlruns --port 5000
-```
-
-### Compare Experiments
-
-View and compare runs at http://localhost:5000.
+| Resource | Link |
+|----------|------|
+| **GitHub Repository** | https://github.com/shahrukhsaba/mlops |
+| **CI/CD Actions** | https://github.com/shahrukhsaba/mlops/actions |
+| **Full Report** | [reports/MLOps_Assignment_Report.md](reports/MLOps_Assignment_Report.md) |
 
 ---
 
 ## 📸 Generated Screenshots
 
-Running `python scripts/execute_notebooks.py` generates notebook screenshots:
+Running `python scripts/execute_notebooks.py` generates all notebook screenshots:
 
 ### EDA Screenshots (01_eda.ipynb)
 
