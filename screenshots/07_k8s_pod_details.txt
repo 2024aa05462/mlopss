@@ -1,0 +1,87 @@
+========================================================================
+     KUBERNETES POD DETAILS
+========================================================================
+
+=== Describe Deployment ===
+Name:                   heart-disease-api
+Namespace:              default
+CreationTimestamp:      Wed, 31 Dec 2025 01:02:42 +0400
+Labels:                 app=heart-disease-api
+                        version=v1
+Annotations:            deployment.kubernetes.io/revision: 3
+Selector:               app=heart-disease-api
+Replicas:               2 desired | 2 updated | 2 total | 2 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:       app=heart-disease-api
+                version=v1
+  Annotations:  kubectl.kubernetes.io/restartedAt: 2025-12-31T04:21:26+04:00
+                prometheus.io/path: /metrics
+                prometheus.io/port: 8000
+                prometheus.io/scrape: true
+  Containers:
+   heart-disease-api:
+    Image:      heart-disease-api:latest
+    Port:       8000/TCP (http)
+    Host Port:  0/TCP (http)
+    Limits:
+      cpu:     500m
+      memory:  512Mi
+    Requests:
+      cpu:      250m
+      memory:   256Mi
+    Liveness:   http-get http://:8000/health delay=15s timeout=5s period=20s #success=1 #failure=3
+    Readiness:  http-get http://:8000/health delay=5s timeout=3s period=10s #success=1 #failure=3
+    Environment:
+      ENV:         production
+      LOG_LEVEL:   INFO
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  heart-disease-api-6d7d767cf (0/0 replicas created), heart-disease-api-5564947959 (0/0 replicas created)
+NewReplicaSet:   heart-disease-api-676668bdb5 (2/2 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  2m6s  deployment-controller  Scaled up replica set heart-disease-api-676668bdb5 from 0 to 1
+  Normal  ScalingReplicaSet  113s  deployment-controller  Scaled down replica set heart-disease-api-5564947959 from 2 to 1
+
+=== Pod Logs (Recent) ===
+INFO:     10.1.0.1:58470 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:57158 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:58660 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:58668 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:56560 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:63530 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:63532 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:55334 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:57236 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:57238 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:62252 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:55016 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:55030 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.65.3:59606 - "GET /model-info HTTP/1.1" 200 OK
+INFO:     10.1.0.1:61248 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60668 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60188 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60194 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:61128 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:59742 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:59748 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:59126 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60946 - "GET /health HTTP/1.1" 200 OK
+INFO:     192.168.65.3:59604 - "GET /health HTTP/1.1" 200 OK
+2025-12-31 00:23:24,463 - INFO - Prediction: 0, Confidence: 0.099, Risk: Low, Duration: 0.014s
+INFO:     192.168.65.3:59608 - "POST /predict HTTP/1.1" 200 OK
+2025-12-31 00:23:24,527 - INFO - Prediction: 1, Confidence: 0.785, Risk: High, Duration: 0.014s
+INFO:     192.168.65.3:59624 - "POST /predict HTTP/1.1" 200 OK
+INFO:     10.1.0.1:60958 - "GET /health HTTP/1.1" 200 OK
+INFO:     10.1.0.1:58852 - "GET /health HTTP/1.1" 200 OK

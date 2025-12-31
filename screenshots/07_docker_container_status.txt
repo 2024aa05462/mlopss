@@ -1,0 +1,13 @@
+========================================================================
+     DOCKER CONTAINER STATUS
+========================================================================
+
+=== Running Containers ===
+CONTAINER ID   IMAGE                      STATUS                    PORTS                                         NAMES
+63876b994cf2   7f772a689c43               Up 2 minutes                                                            k8s_heart-disease-api_heart-disease-api-676668bdb5-877qm_default_bc680aa5-7510-4a03-9717-1d4081a2bda7_0
+c140f7481c00   7f772a689c43               Up 2 minutes                                                            k8s_heart-disease-api_heart-disease-api-676668bdb5-x6lmb_default_4ef5db9e-77c7-43ab-b8c7-530d02e733a3_0
+0f05f1efee16   heart-disease-api:latest   Up 11 minutes (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp   heart-disease-api
+
+=== Docker Images ===
+WARNING: This output is designed for human readability. For machine-readable output, please use --format.
+heart-disease-api:latest                                                                                                               7f772a689c43        679MB          146MB   U    

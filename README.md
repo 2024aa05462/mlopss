@@ -62,7 +62,7 @@ open http://localhost:8000/docs
 - [Model Training](#-model-training)
 - [API Usage](#-api-usage)
 - [Model Containerization (Step 6)](#-model-containerization-step-6)
-- [Kubernetes Deployment](#-kubernetes-deployment)
+- [Production Deployment (Step 7)](#-production-deployment-step-7)
 - [CI/CD Pipeline](#-cicd-pipeline)
 - [Monitoring](#-monitoring)
 - [Testing](#-testing)
@@ -573,12 +573,57 @@ docker rm heart-disease-api
 
 ---
 
-## ☸️ Kubernetes Deployment
+## ☸️ Production Deployment (Step 7)
 
-### Prerequisites
+This section covers Step 7 of the assignment: *"Deploy the Dockerized API to a public cloud or local Kubernetes"*.
 
-- Minikube or a Kubernetes cluster
-- kubectl configured
+### Deployment Options
+
+| Option | Description | Used in This Project |
+|--------|-------------|----------------------|
+| **Docker Desktop Kubernetes** | Local K8s cluster | ✅ Primary |
+| **Minikube** | Local K8s for development | ✅ Supported |
+| **GKE/EKS/AKS** | Cloud Kubernetes | ✅ Manifests ready |
+
+### Kubernetes Manifests
+
+| File | Description |
+|------|-------------|
+| `k8s/namespace.yaml` | Namespace definition |
+| `k8s/configmap.yaml` | Application configuration |
+| `k8s/deployment.yaml` | Deployment + Service + HPA |
+| `k8s/ingress.yaml` | Ingress rules (optional) |
+
+### Deployment Features
+
+| Feature | Configuration |
+|---------|---------------|
+| **Replicas** | 2 pods (min), 5 pods (max with HPA) |
+| **Service Type** | LoadBalancer (exposed on port 80) |
+| **Health Checks** | Liveness & Readiness probes on `/health` |
+| **Auto-scaling** | HPA based on CPU (70%) and Memory (80%) |
+| **Resources** | 256Mi-512Mi memory, 250m-500m CPU |
+| **Rolling Updates** | Zero-downtime deployments |
+| **Prometheus** | Metrics scraping annotations |
+
+### Deploy to Docker Desktop Kubernetes
+
+```bash
+# Ensure Docker Desktop Kubernetes is enabled
+# (Docker Desktop → Settings → Kubernetes → Enable)
+
+# Build Docker image
+docker build -t heart-disease-api:latest .
+
+# Apply Kubernetes manifests
+kubectl apply -f k8s/deployment.yaml
+
+# Verify deployment
+kubectl get deployments
+kubectl get pods
+kubectl get svc
+kubectl get hpa
+```
 
 ### Deploy to Minikube
 
@@ -605,15 +650,75 @@ minikube service heart-disease-api --url
 ### Verify Deployment
 
 ```bash
-# Check pods
-kubectl get pods
+# Check deployment status
+kubectl get deployments
+# NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+# heart-disease-api   2/2     2            2           3h
 
-# Check services
+# Check running pods
+kubectl get pods -o wide
+# NAME                                 READY   STATUS    RESTARTS   AGE
+# heart-disease-api-676668bdb5-877qm   1/1     Running   0          2m
+# heart-disease-api-676668bdb5-x6lmb   1/1     Running   0          2m
+
+# Check LoadBalancer service
 kubectl get svc
+# NAME                TYPE           EXTERNAL-IP   PORT(S)
+# heart-disease-api   LoadBalancer   localhost     80:31775/TCP
 
-# View logs
-kubectl logs -l app=heart-disease-api
+# Check HorizontalPodAutoscaler
+kubectl get hpa
+# NAME                    REFERENCE                      MINPODS   MAXPODS   REPLICAS
+# heart-disease-api-hpa   Deployment/heart-disease-api   2         5         2
 ```
+
+### Test Endpoints via LoadBalancer (Port 80)
+
+```bash
+# Health check
+curl http://localhost:80/health
+# {"status": "healthy", "model_loaded": true, ...}
+
+# Model info
+curl http://localhost:80/model-info
+# {"model_type": "RandomForestClassifier", ...}
+
+# Prediction with JSON
+curl -X POST http://localhost:80/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age":63,"sex":1,"cp":3,"trestbps":145,"chol":233,"fbs":1,"restecg":0,"thalach":150,"exang":0,"oldpeak":2.3,"slope":0,"ca":0,"thal":1}'
+# {"prediction": 0, "confidence": 0.2737, "risk_level": "Low", ...}
+```
+
+### View Pod Logs
+
+```bash
+kubectl logs -l app=heart-disease-api --tail=20
+```
+
+### Scale Deployment Manually
+
+```bash
+kubectl scale deployment heart-disease-api --replicas=3
+```
+
+### Restart Deployment (Update Image)
+
+```bash
+kubectl rollout restart deployment heart-disease-api
+kubectl rollout status deployment heart-disease-api
+```
+
+### Deployment Screenshots
+
+See the `screenshots/` folder for deployment verification:
+
+| Screenshot | Description |
+|------------|-------------|
+| `07_k8s_deployment_status.txt` | Deployments, pods, services, HPA |
+| `07_k8s_api_verification.txt` | API endpoint tests via LoadBalancer |
+| `07_k8s_pod_details.txt` | Pod describe and logs |
+| `07_docker_container_status.txt` | Docker container status |
 
 ---
 
@@ -737,23 +842,44 @@ View and compare runs at http://localhost:5000.
 
 ## 📸 Generated Screenshots
 
-Running `python scripts/execute_notebooks.py` generates 13 screenshots:
+Running `python scripts/execute_notebooks.py` generates notebook screenshots:
 
-| Notebook | Screenshot | Description |
-|----------|------------|-------------|
-| 01_eda | `01_class_balance.png` | Target class distribution |
-| 01_eda | `01_numerical_histograms.png` | Distribution of numerical features |
-| 01_eda | `01_correlation_heatmap.png` | Feature correlation matrix |
-| 01_eda | `01_categorical_distributions.png` | Categorical feature distributions |
-| 01_eda | `01_boxplots_by_target.png` | Features by target class |
-| 02_modeling | `02_model_comparison.png` | Model metrics comparison |
-| 02_modeling | `02_roc_curve_comparison.png` | ROC curves for both models |
-| 02_modeling | `02_confusion_matrices.png` | Confusion matrices side-by-side |
-| 02_modeling | `02_feature_importance.png` | Random Forest feature importance |
-| 03_mlflow | `03_lr_confusion_matrix.png` | Logistic Regression confusion matrix |
-| 03_mlflow | `03_lr_roc_curve.png` | Logistic Regression ROC curve |
-| 03_mlflow | `03_rf_confusion_matrix.png` | Random Forest confusion matrix |
-| 03_mlflow | `03_rf_roc_curve.png` | Random Forest ROC curve |
+### EDA Screenshots (01_eda.ipynb)
+
+| Screenshot | Description |
+|------------|-------------|
+| `01_class_balance.png` | Target class distribution |
+| `01_numerical_histograms.png` | Distribution of numerical features |
+| `01_correlation_heatmap.png` | Feature correlation matrix |
+| `01_categorical_distributions.png` | Categorical feature distributions |
+| `01_boxplots_by_target.png` | Features by target class |
+
+### Model Training Screenshots (02_feature_engineering_modeling.ipynb)
+
+| Screenshot | Description |
+|------------|-------------|
+| `02_model_comparison.png` | Model metrics comparison |
+| `02_roc_curve_comparison.png` | ROC curves for both models |
+| `02_confusion_matrices.png` | Confusion matrices side-by-side |
+| `02_feature_importance.png` | Random Forest feature importance |
+
+### MLflow Experiment Screenshots (03_mlflow_experiments.ipynb)
+
+| Screenshot | Description |
+|------------|-------------|
+| `03_lr_confusion_matrix.png` | Logistic Regression confusion matrix |
+| `03_lr_roc_curve.png` | Logistic Regression ROC curve |
+| `03_rf_confusion_matrix.png` | Random Forest confusion matrix |
+| `03_rf_roc_curve.png` | Random Forest ROC curve |
+
+### Production Deployment Screenshots (Step 7)
+
+| Screenshot | Description |
+|------------|-------------|
+| `07_k8s_deployment_status.txt` | Kubernetes deployments, pods, services, HPA |
+| `07_k8s_api_verification.txt` | API endpoint tests via LoadBalancer |
+| `07_k8s_pod_details.txt` | Pod describe and container logs |
+| `07_docker_container_status.txt` | Docker container and image status |
 
 ---
 

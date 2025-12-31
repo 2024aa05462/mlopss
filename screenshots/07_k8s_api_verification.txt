@@ -1,0 +1,55 @@
+========================================================================
+     API ENDPOINT VERIFICATION (via LoadBalancer port 80)
+========================================================================
+
+=== Health Check ===
+{
+    "status": "healthy",
+    "model_loaded": true,
+    "preprocessor_loaded": true,
+    "uptime_seconds": 116.28,
+    "timestamp": "2025-12-31T00:23:24.311596"
+}
+
+=== Model Info ===
+{
+    "model_type": "RandomForestClassifier",
+    "version": "1.0.0",
+    "train_date": "2025-12-28T20:56:16.137745",
+    "metrics": {},
+    "features": [
+        "age",
+        "sex",
+        "cp",
+        "trestbps",
+        "chol",
+        "fbs",
+        "restecg",
+        "thalach",
+        "exang",
+        "oldpeak",
+        "slope",
+        "ca",
+        "thal"
+    ]
+}
+
+=== Prediction (Low Risk Patient) ===
+{
+    "prediction": 0,
+    "confidence": 0.0992,
+    "risk_level": "Low",
+    "probability_no_disease": 0.9008,
+    "probability_disease": 0.0992,
+    "processing_time_ms": 14.01
+}
+
+=== Prediction (High Risk Patient) ===
+{
+    "prediction": 1,
+    "confidence": 0.785,
+    "risk_level": "High",
+    "probability_no_disease": 0.215,
+    "probability_disease": 0.785,
+    "processing_time_ms": 14.29
+}

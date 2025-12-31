@@ -1,0 +1,24 @@
+========================================================================
+     KUBERNETES DEPLOYMENT STATUS
+========================================================================
+
+=== Context ===
+docker-desktop
+
+=== Deployments ===
+NAME                READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS          IMAGES                     SELECTOR
+heart-disease-api   2/2     2            2           3h20m   heart-disease-api   heart-disease-api:latest   app=heart-disease-api
+
+=== Pods ===
+NAME                                 READY   STATUS    RESTARTS   AGE    IP          NODE             NOMINATED NODE   READINESS GATES
+heart-disease-api-676668bdb5-877qm   1/1     Running   0          94s    10.1.0.15   docker-desktop   <none>           <none>
+heart-disease-api-676668bdb5-x6lmb   1/1     Running   0          107s   10.1.0.14   docker-desktop   <none>           <none>
+
+=== Services ===
+NAME                TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+heart-disease-api   LoadBalancer   10.102.152.153   localhost     80:31775/TCP   3h20m
+kubernetes          ClusterIP      10.96.0.1        <none>        443/TCP        3h28m
+
+=== HorizontalPodAutoscaler ===
+NAME                    REFERENCE                      TARGETS                                     MINPODS   MAXPODS   REPLICAS   AGE
+heart-disease-api-hpa   Deployment/heart-disease-api   cpu: <unknown>/70%, memory: <unknown>/80%   2         5         2          3h20m
