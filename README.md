@@ -38,9 +38,13 @@ docker run -d --name heart-disease-api -p 8000:8000 heart-disease-api:latest
 
 # Step 8: Test the API
 curl http://localhost:8000/health
-curl -X POST "http://localhost:8000/predict?age=63&sex=1&cp=3&trestbps=145&chol=233&fbs=1&restecg=0&thalach=150&exang=0&oldpeak=2.3&slope=0&ca=0&thal=1"
 
-# Step 9: Open API documentation
+# Predict with JSON input
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age":63,"sex":1,"cp":3,"trestbps":145,"chol":233,"fbs":1,"restecg":0,"thalach":150,"exang":0,"oldpeak":2.3,"slope":0,"ca":0,"thal":1}'
+
+# Step 9: Open API documentation (Swagger UI)
 open http://localhost:8000/docs
 ```
 
@@ -57,7 +61,7 @@ open http://localhost:8000/docs
 - [Model Packaging & Reproducibility](#-model-packaging--reproducibility)
 - [Model Training](#-model-training)
 - [API Usage](#-api-usage)
-- [Docker Deployment](#-docker-deployment)
+- [Model Containerization (Step 6)](#-model-containerization-step-6)
 - [Kubernetes Deployment](#-kubernetes-deployment)
 - [CI/CD Pipeline](#-cicd-pipeline)
 - [Monitoring](#-monitoring)
@@ -243,8 +247,10 @@ docker run -d --name heart-disease-api -p 8000:8000 heart-disease-api:latest
 # Health check
 curl http://localhost:8000/health
 
-# Make a prediction
-curl -X POST "http://localhost:8000/predict?age=63&sex=1&cp=3&trestbps=145&chol=233&fbs=1&restecg=0&thalach=150&exang=0&oldpeak=2.3&slope=0&ca=0&thal=1"
+# Make a prediction with JSON input
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age":63,"sex":1,"cp":3,"trestbps":145,"chol":233,"fbs":1,"restecg":0,"thalach":150,"exang":0,"oldpeak":2.3,"slope":0,"ca":0,"thal":1}'
 ```
 
 **Expected Response:**
@@ -255,7 +261,7 @@ curl -X POST "http://localhost:8000/predict?age=63&sex=1&cp=3&trestbps=145&chol=
   "risk_level": "Low",
   "probability_no_disease": 0.7263,
   "probability_disease": 0.2737,
-  "processing_time_ms": 17.38
+  "processing_time_ms": 11.93
 }
 ```
 
@@ -401,32 +407,101 @@ uvicorn api.app:app --reload --host 0.0.0.0 --port 8000
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/health` | GET | Health check |
-| `/predict` | POST | Make prediction |
-| `/docs` | GET | Swagger documentation |
+| `/` | GET | API information |
+| `/health` | GET | Health check with model status |
+| `/model-info` | GET | Model metadata and metrics |
+| `/predict` | POST | Make prediction (JSON input) |
+| `/metrics` | GET | Prometheus metrics |
+| `/docs` | GET | Swagger UI documentation |
+| `/redoc` | GET | ReDoc documentation |
 
-### Example Request
+### Example Request (JSON Input)
 
 ```bash
-curl -X POST "http://localhost:8000/predict?age=63&sex=1&cp=3&trestbps=145&chol=233&fbs=1&restecg=0&thalach=150&exang=0&oldpeak=2.3&slope=0&ca=0&thal=1"
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "age": 63,
+    "sex": 1,
+    "cp": 3,
+    "trestbps": 145,
+    "chol": 233,
+    "fbs": 1,
+    "restecg": 0,
+    "thalach": 150,
+    "exang": 0,
+    "oldpeak": 2.3,
+    "slope": 0,
+    "ca": 0,
+    "thal": 1
+  }'
 ```
 
 ### Example Response
 
 ```json
 {
-  "prediction": 1,
-  "confidence": 0.85
+  "prediction": 0,
+  "confidence": 0.2737,
+  "risk_level": "Low",
+  "probability_no_disease": 0.7263,
+  "probability_disease": 0.2737,
+  "processing_time_ms": 11.93
 }
 ```
 
+### Response Fields
+
+| Field | Description |
+|-------|-------------|
+| `prediction` | 0 = No heart disease, 1 = Heart disease present |
+| `confidence` | Probability of disease (0-1) |
+| `risk_level` | "Low" (<0.3), "Medium" (0.3-0.7), "High" (>0.7) |
+| `probability_no_disease` | Probability of no heart disease |
+| `probability_disease` | Probability of heart disease |
+| `processing_time_ms` | API response time in milliseconds |
+
 ### Interactive Documentation
 
-Open http://localhost:8000/docs for Swagger UI.
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
 
 ---
 
-## 🐳 Docker Deployment
+## 🐳 Model Containerization (Step 6)
+
+This section covers Step 6 of the assignment: *"Build a Docker container for the model-serving API (Flask or FastAPI is recommended)"*.
+
+### Why FastAPI?
+
+| Feature | FastAPI | Flask |
+|---------|---------|-------|
+| **Async Support** | ✅ Native | ❌ Requires extensions |
+| **Auto Documentation** | ✅ Built-in (`/docs`, `/redoc`) | ❌ Manual setup |
+| **Data Validation** | ✅ Pydantic (automatic) | ❌ Manual validation |
+| **JSON Schema** | ✅ Auto-generated | ❌ Manual |
+| **Performance** | ✅ Faster (async) | ⚠️ Slower |
+| **Type Hints** | ✅ Required & validated | ❌ Optional |
+
+### API Features
+
+- **Framework**: FastAPI with Pydantic validation
+- **Endpoint**: `POST /predict` accepts **JSON input**
+- **Response**: Returns prediction, confidence, and risk level
+- **Documentation**: Auto-generated Swagger UI at `/docs`
+
+### Dockerfile Overview
+
+```dockerfile
+FROM python:3.10-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir fastapi uvicorn scikit-learn pandas numpy joblib pydantic
+COPY api/ ./api/
+COPY models/production/ ./models/production/
+EXPOSE 8000
+CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+```
 
 ### Build Docker Image
 
@@ -437,7 +512,7 @@ docker build -t heart-disease-api:latest .
 ### Run Container
 
 ```bash
-docker run -p 8000:8000 heart-disease-api:latest
+docker run -d --name heart-disease-api -p 8000:8000 heart-disease-api:latest
 ```
 
 ### Using Docker Compose
@@ -448,14 +523,52 @@ docker-compose up -d
 
 This starts both the API and MLflow server.
 
-### Test Container
+### Test Container with JSON Input
 
 ```bash
 # Health check
 curl http://localhost:8000/health
 
-# Prediction
-curl -X POST "http://localhost:8000/predict?age=63&sex=1&cp=3&trestbps=145&chol=233&fbs=1&restecg=0&thalach=150&exang=0&oldpeak=2.3&slope=0&ca=0&thal=1"
+# Prediction with JSON input (required format)
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age":63,"sex":1,"cp":3,"trestbps":145,"chol":233,"fbs":1,"restecg":0,"thalach":150,"exang":0,"oldpeak":2.3,"slope":0,"ca":0,"thal":1}'
+```
+
+### Expected Response
+
+```json
+{
+  "prediction": 0,
+  "confidence": 0.2737,
+  "risk_level": "Low",
+  "probability_no_disease": 0.7263,
+  "probability_disease": 0.2737,
+  "processing_time_ms": 11.93
+}
+```
+
+### Test Different Risk Profiles
+
+```bash
+# High-risk patient
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age":70,"sex":1,"cp":2,"trestbps":180,"chol":300,"fbs":1,"restecg":1,"thalach":100,"exang":1,"oldpeak":4.0,"slope":2,"ca":3,"thal":2}'
+# Response: {"prediction": 1, "confidence": 0.785, "risk_level": "High", ...}
+
+# Low-risk patient
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age":35,"sex":0,"cp":0,"trestbps":120,"chol":180,"fbs":0,"restecg":0,"thalach":170,"exang":0,"oldpeak":0.0,"slope":1,"ca":0,"thal":1}'
+# Response: {"prediction": 0, "confidence": 0.0992, "risk_level": "Low", ...}
+```
+
+### Stop Container
+
+```bash
+docker stop heart-disease-api
+docker rm heart-disease-api
 ```
 
 ---
