@@ -852,6 +852,31 @@ The pre-built dashboard (`heart-disease-api.json`) includes:
 - **Predictions by Class** - Pie chart (Disease vs No Disease)
 - **Prediction Counts Over Time** - Time series graph
 
+### Grafana Login & Dashboard Access
+
+1. **Open Grafana**: http://localhost:3000
+2. **Login**: Username `admin`, Password `admin`
+3. **Find Dashboard**: Click ☰ menu → Dashboards → "Heart Disease API Dashboard"
+
+**If dashboard doesn't appear automatically:**
+
+```bash
+# Import manually via Grafana UI:
+# 1. Click ☰ menu → Dashboards → Import
+# 2. Upload: monitoring/grafana/dashboards/heart-disease-api.json
+# 3. Click Import
+```
+
+### Verify Prometheus is Scraping
+
+```bash
+# Check targets
+curl http://localhost:9090/api/v1/targets
+
+# Query a metric
+curl "http://localhost:9090/api/v1/query?query=predictions_total"
+```
+
 ### View Container Logs
 
 ```bash
