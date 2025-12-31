@@ -1,17 +1,18 @@
 # Quick Start Guide: Run Locally with Docker Desktop
 
-This guide provides step-by-step instructions to clone and run the Heart Disease Prediction API locally using Docker Desktop.
+This guide provides step-by-step instructions to clone and run the Heart Disease Prediction API locally using Docker Desktop (with optional Kubernetes deployment).
 
 ---
 
 ## Prerequisites
 
-| Requirement | Version | Installation |
-|-------------|---------|--------------|
-| **Docker Desktop** | 4.0+ | [Download](https://www.docker.com/products/docker-desktop/) |
-| **Git** | 2.0+ | [Download](https://git-scm.com/downloads) |
+| Requirement | Version | Installation | Required For |
+|-------------|---------|--------------|--------------|
+| **Docker Desktop** | 4.0+ | [Download](https://www.docker.com/products/docker-desktop/) | Docker & K8s |
+| **Git** | 2.0+ | [Download](https://git-scm.com/downloads) | Both |
+| **kubectl** | 1.25+ | Included with Docker Desktop | Kubernetes only |
 
-> **Note**: Ensure Docker Desktop is running before proceeding.
+> **Note**: Ensure Docker Desktop is running before proceeding. For Kubernetes, enable it in Docker Desktop settings.
 
 ---
 
@@ -114,6 +115,103 @@ docker rm heart-disease-api
 # (Optional) Remove the image
 docker rmi heart-disease-api:latest
 ```
+
+---
+
+## (Optional) Deploy to Kubernetes (Docker Desktop)
+
+Docker Desktop includes a built-in Kubernetes cluster. Follow these steps for production-like deployment.
+
+### Enable Kubernetes in Docker Desktop
+
+1. Open **Docker Desktop**
+2. Go to **Settings** (⚙️) → **Kubernetes**
+3. Check ✅ **Enable Kubernetes**
+4. Click **Apply & Restart**
+5. Wait for Kubernetes to start (green indicator)
+
+### Verify Kubernetes is Running
+
+```bash
+kubectl cluster-info
+kubectl get nodes
+```
+
+**Expected Output:**
+```
+Kubernetes control plane is running at https://kubernetes.docker.internal:6443
+NAME             STATUS   ROLES           AGE   VERSION
+docker-desktop   Ready    control-plane   1d    v1.28.2
+```
+
+### Deploy to Kubernetes
+
+```bash
+# Build image (if not already built)
+docker build -t heart-disease-api:latest .
+
+# Deploy to Kubernetes
+kubectl apply -f k8s/deployment.yaml
+
+# Check deployment status
+kubectl get deployments
+kubectl get pods
+kubectl get svc
+```
+
+**Expected Output:**
+```
+NAME                READY   UP-TO-DATE   AVAILABLE
+heart-disease-api   2/2     2            2
+
+NAME                                 READY   STATUS    RESTARTS
+heart-disease-api-xxxxx-yyyyy        1/1     Running   0
+heart-disease-api-xxxxx-zzzzz        1/1     Running   0
+
+NAME                TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)
+heart-disease-api   LoadBalancer   10.x.x.x       localhost     80:xxxxx/TCP
+```
+
+### Test via Kubernetes (Port 80)
+
+```bash
+# Health check
+curl http://localhost:80/health
+
+# Prediction
+curl -X POST http://localhost:80/predict \
+  -H "Content-Type: application/json" \
+  -d '{"age":63,"sex":1,"cp":3,"trestbps":145,"chol":233,"fbs":1,"restecg":0,"thalach":150,"exang":0,"oldpeak":2.3,"slope":0,"ca":0,"thal":1}'
+```
+
+### View Kubernetes Dashboard (Optional)
+
+```bash
+# View pod logs
+kubectl logs -l app=heart-disease-api --tail=20
+
+# Describe deployment
+kubectl describe deployment heart-disease-api
+```
+
+### Cleanup Kubernetes Deployment
+
+```bash
+kubectl delete -f k8s/deployment.yaml
+```
+
+---
+
+## Docker vs Kubernetes Comparison
+
+| Feature | Docker (Step 3) | Kubernetes (Optional) |
+|---------|-----------------|----------------------|
+| **Port** | `localhost:8000` | `localhost:80` |
+| **Replicas** | 1 container | 2+ pods (auto-scaled) |
+| **Health Checks** | Manual | Automatic (liveness/readiness) |
+| **Load Balancing** | None | Built-in LoadBalancer |
+| **Auto-restart** | `--restart=always` | Automatic |
+| **Best For** | Development/Testing | Production-like |
 
 ---
 
